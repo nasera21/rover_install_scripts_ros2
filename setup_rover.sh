@@ -12,7 +12,7 @@
 #########################################################################
 ROS_DISTRO=humble
 ROVER_REPO=https://github.com/RoverRobotics/roverrobotics_ros2.git
-WORKSPACE_NAME=rover_workspace
+WORKSPACE_NAME=ros2_ws
 CURRENT_DIR=${PWD}
 BASEDIR=$CURRENT_DIR
 
@@ -81,7 +81,7 @@ create_startup_script() {
     local robot_type=$1
     cat << EOF2 | sudo tee /usr/sbin/roverrobotics
 #!/bin/bash
-source ~/rover_workspace/install/setup.sh
+source ~/ros2_ws/install/setup.sh
 ros2 launch roverrobotics_driver ${robot_type}_teleop.launch.py
 PID=\$!
 wait "\$PID"
@@ -165,71 +165,78 @@ clear
 #                          INSTALL PROCESS                              #
 #########################################################################
 
-# Prompt the user for device type
-while true; do
-    printf "Enter the robot type [(1) indoor_miti, (2) miti, (3) mini, (4) zero, (5) pro]: "
-    read device_type
+# # Prompt the user for device type
+# while true; do
+#     printf "Enter the robot type [(1) indoor_miti, (2) miti, (3) mini, (4) zero, (5) pro]: "
+#     read device_type
 
-    case "$device_type" in
-        "1")
-            device_type="indoor_miti"
-            ;;
-        "2")
-            device_type="miti"
-            ;;
-        "3")
-            device_type="mini"
-            ;;
-        "4")
-            device_type="zero"
-            ;;
-        "5")
-            device_type="pro"
-            ;;
-    esac
-
-
-    # Check if the entered device type is valid
-    if [ "$device_type" != "indoor_miti" ] && [ "$device_type" != "miti" ] && [ "$device_type" != "mini" ] && [ "$device_type" != "zero" ] && [ "$device_type" != "pro" ]; then
-        print_red "Invalid robot type."
-    else
-        break
-    fi
-done
-
-# Prompt the user to decide about installing ros2 drivers
-while true; do
-    printf "Would you like to install the Rover Robotics ros2 repository? [y/n]: "
-    read install_repo
-    case $install_repo in
-        [Yy]* ) install_repo=true; break;;
-        [Nn]* ) install_repo=false; break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
-
-# Prompt the user to decide about installing automatic start service
-while true; do
-    printf "Would you like to install the automatic start service? [y/n]: "
-    read install_service
-    case $install_service in
-        [Yy]* ) install_service=true; break;;
-        [Nn]* ) install_service=false; break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+#     case "$device_type" in
+#         "1")
+#             device_type="indoor_miti"
+#             ;;
+#         "2")
+#             device_type="miti"
+#             ;;
+#         "3")
+#             device_type="mini"
+#             ;;
+#         "4")
+#             device_type="zero"
+#             ;;
+#         "5")
+#             device_type="pro"
+#             ;;
+#     esac
 
 
-# Prompt the user to decide about installing the udev rules
-while true; do
-    printf "Would you like to install the udev rules? [y/n]: "
-    read install_udev
-    case $install_udev in
-        [Yy]* ) install_udev=true; break;;
-        [Nn]* ) install_udev=false; break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+#     # Check if the entered device type is valid
+#     if [ "$device_type" != "indoor_miti" ] && [ "$device_type" != "miti" ] && [ "$device_type" != "mini" ] && [ "$device_type" != "zero" ] && [ "$device_type" != "pro" ]; then
+#         print_red "Invalid robot type."
+#     else
+#         break
+#     fi
+# done
+
+device_type="pro"
+
+# # Prompt the user to decide about installing ros2 drivers
+# while true; do
+#     printf "Would you like to install the Rover Robotics ros2 repository? [y/n]: "
+#     read install_repo
+#     case $install_repo in
+#         [Yy]* ) install_repo=true; break;;
+#         [Nn]* ) install_repo=false; break;;
+#         * ) echo "Please answer yes or no.";;
+#     esac
+# done
+
+install_repo=true
+
+# # Prompt the user to decide about installing automatic start service
+# while true; do
+#     printf "Would you like to install the automatic start service? [y/n]: "
+#     read install_service
+#     case $install_service in
+#         [Yy]* ) install_service=true; break;;
+#         [Nn]* ) install_service=false; break;;
+#         * ) echo "Please answer yes or no.";;
+#     esac
+# done
+
+install_service=true
+
+# # Prompt the user to decide about installing the udev rules
+# while true; do
+#     printf "Would you like to install the udev rules? [y/n]: "
+#     read install_udev
+#     case $install_udev in
+#         [Yy]* ) install_udev=true; break;;
+#         [Nn]* ) install_udev=false; break;;
+#         * ) echo "Please answer yes or no.";;
+#     esac
+# done
+
+install_udev=true
 
 install_number=0
 install_total=2
@@ -369,7 +376,7 @@ if [ "$install_udev" = true ]; then
 
         echo ""
         print_italic "Reloading udev rules"
-        sudo udevadm control --reload-rules > /dev/null
+        sudo /lib/systemd/systemd-udevd --daemon && sudo udevadm control --reload-rules
         if [ $? -ne 0 ]; then
             print_red "Failed to reload udev rules"
         else

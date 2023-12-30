@@ -11,3 +11,7 @@ KERNEL=="ttyUSB[0-9]", ATTRS{idVendor}=="0403", ATTRS{serial}=="Rover Zero 2", M
 KERNEL=="ttyUSB[0-9]", ATTRS{idVendor}=="0403", ATTRS{serial}=="Rover Pro", MODE:="0777", SYMLINK+="rover-pro", RUN+="/bin/setserial /dev/%k low_latency"
 KERNEL=="ttyUSB[0-9]", ATTRS{idVendor}=="10c4", ATTRS{serial}=="Rover Pro", MODE:="0777", SYMLINK+="rover-pro", RUN+="/bin/setserial /dev/%k low_latency"
 KERNEL=="ttyACM[0-9]", ATTRS{idVendor}=="0483", MODE:="0777", SYMLINK+="rover-control", RUN+="/bin/setserial /dev/%k low_latency"
+
+
+# make sure to update values to your device's for ATTRS{idVendor} and ATTRS{idProduct}
+KERNEL=="ttyUSB[0-9]", ATTRS{idVendor}=="1d6b", ATTRS{idProduct}=="0002", MODE:="0777", SYMLINK+="rover-pro"

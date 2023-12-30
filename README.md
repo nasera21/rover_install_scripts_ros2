@@ -1,5 +1,5 @@
 # rover_install_scripts_ros2
-Install Scripts for Rover Robots
+Install Script for Rover Robots Pro with Udev rules/service start created for Dockerfiles.
 
 **REQUIRES UBUNTU 22.04 & ROS2 HUMBLE**
 
