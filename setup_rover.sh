@@ -223,7 +223,7 @@ install_repo=true
 #     esac
 # done
 
-install_service=true
+install_service=false
 
 # # Prompt the user to decide about installing the udev rules
 # while true; do
