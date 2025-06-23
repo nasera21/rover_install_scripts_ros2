@@ -239,7 +239,7 @@ install_service=false
 install_udev=true
 
 install_number=0
-install_total=2
+install_total=3
 install_can=true
 
 if [ "$install_repo" = true ]; then
@@ -261,17 +261,17 @@ if [ "$device_type" = "indoor_miti" ] || [ "$device_type" = "miti" ] || [ "$devi
 fi
 
 # Prompt the user to decide about installing CAN driver
-if [ "$install_can" = true ]; then
-    while true; do
-        printf "Is the Rover %s connected via CAN-TO-USB? [y/n]: " "$device_type"
-        read -r rover_can
-        case $rover_can in
-            [Yy]* ) install_can=true; install_total=$((install_total+1)); break;;
-            [Nn]* ) install_can=false; break;;
-            * ) echo "Please answer yes or no.";;
-        esac
-    done
-fi
+# if [ "$install_can" = true ]; then
+#     while true; do
+#         printf "Is the Rover %s connected via CAN-TO-USB? [y/n]: " "$device_type"
+#         read -r rover_can
+#         case $rover_can in
+#             [Yy]* ) install_can=true; install_total=$((install_total+1)); break;;
+#             [Nn]* ) install_can=false; break;;
+#             * ) echo "Please answer yes or no.";;
+#         esac
+#     done
+# fi
 
 clear
 
