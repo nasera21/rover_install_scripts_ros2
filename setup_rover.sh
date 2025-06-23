@@ -197,7 +197,7 @@ clear
 #     fi
 # done
 
-device_type="pro"
+device_type="miti"
 
 # # Prompt the user to decide about installing ros2 drivers
 # while true; do
@@ -240,7 +240,7 @@ install_udev=true
 
 install_number=0
 install_total=2
-install_can=false
+install_can=true
 
 if [ "$install_repo" = true ]; then
     install_total=$((install_total+1))
