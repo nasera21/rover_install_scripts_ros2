@@ -10,7 +10,7 @@
 #                          VARIABLES FOR SETUP                          #
 #                     EDIT TO CHANGE REPO/ROS DISTRO                    #
 #########################################################################
-ROS_DISTRO=humble
+ROS_DISTRO=jazzy
 ROVER_REPO=https://github.com/RoverRobotics/roverrobotics_ros2.git
 WORKSPACE_NAME=ros2_ws
 CURRENT_DIR=${PWD}
